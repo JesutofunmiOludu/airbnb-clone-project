@@ -57,5 +57,89 @@ Booking ↔ Review (One-to-One/One-to-Many):
 A common pattern is that a guest can write only one Review after a Booking is complete. The booking_id FK links the review directly to the reservation.
 
 # Main Project Features
+User Management 👤	Handles the creation, authentication, and profiles for all users, distinguishing between Guests (who book) and Hosts (who list properties).	This establishes application security and access control, ensuring users can only perform authorized actions (e.g., only a host can create a listing, and a user can only edit their own profile).
+Property Management 🏠	Encompasses the complete lifecycle for a listing, including creation, detailed description, photo uploads, pricing, and status updates (CRUD operations).	This is the core function for Hosts, providing the tools necessary to upload and manage the inventory (available homes) that the entire platform is built upon.
+Search & Filtering 🔍	Allows users to browse listings based on criteria like location, dates, price range, number of guests, and specific amenities.	This ensures usability and discoverability. It enables Guests to quickly find relevant properties from the vast inventory, making the platform functional and efficient.
+Booking System 🗓️	Manages the reservation process, checking date availability, calculating the total price, processing the booking request, and confirming the reservation.	This is the application's central transactional engine. It handles the complex logic of date validation and financial commitment, transforming a search into a confirmed stay.
+Reviews & Ratings ⭐	Provides a mechanism for Guests to submit public feedback (rating and comment) after completing a stay at a property.	This builds trust and transparency on the platform. Ratings and reviews offer social proof that helps future Guests make informed decisions and encourages Hosts to maintain quality.
+Payment System Integration 💳	Simulates or integrates with a real payment gateway (like Stripe or PayPal) to securely process financial transactions for bookings.	This addresses the monetization and financial workflow. It's critical for collecting payments from Guests and eventually paying out Hosts, completing the business model loop.
+Application Security 🛡️	Focuses on securing all layers, including user data protection, API endpoint validation, and protection against common web vulnerabilities (e.g., XSS, SQL Injection).	This ensures data integrity and user trust. It's foundational to operating a successful booking platform where sensitive personal and financial data is handled.
 
+# Key API Security Measures
+ 1. Authentication (Who are you?): JSON Web Tokens (JWT)	After a user logs in, the API issues a signed, short-lived Access Token (JWT). This token is sent with every subsequent request, verifying the user's identity without requiring them to send their password repeatedly.
+Secure Password Hashing	Never store raw passwords. Django's built-in authentication uses strong, one-way hashing algorithms (like Argon2 or bcrypt) and salting to protect passwords even if the database is breached.
+Rate Limiting (on login)	Restricting the number of failed login attempts from a single IP address or user within a given timeframe.
+2. Authorization (What can you do?): Role-Based Access Control (RBAC)	Defining clear roles—Guest and Host—and restricting API access based on those roles. For example, the POST /api/listings/ endpoint is only accessible to authenticated users with the Host role.
+Object-Level Permissions	Ensuring a user can only interact with the data they own. A Host can only view, edit, or delete their own listings (e.g., a Host attempting to modify listing_id=123 must be the host_id associated with that listing).
+Input & Output Validation	Rigorously checking all data coming into the API to prevent injection attacks (like SQL Injection). Similarly, only sensitive data required for the client is returned, preventing Excess Data Exposure (e.g., never send a user's password hash in a response).
+3. Data Protection & Defense: HTTPS (TLS/SSL)	Enforcing Transport Layer Security (TLS) to encrypt all data transmitted between the client (React app) and the server (Django API).
+Rate Limiting (General)	Throttling requests to all public or heavy-load endpoints (like Search or Booking).
+Secure Secret Management	Storing sensitive values, like the Django SECRET_KEY, database credentials, and payment API keys, in secure environment variables, never hardcoding them in the source code.
+# Why Security is Crucial for Each Key Area
+Security is not just a feature; it's the foundation of a trust-based platform. A single major breach can destroy the project's reputation and legality.
+User Data Protection	Storing PII (Personal Identifiable Information) like names, email addresses, and home addresses for Hosts.	Security measures like strong hashing and TLS prevent identity theft and ensure compliance with data privacy regulations (like GDPR/CCPA).
+Securing Booking & Payments	Handling financial transactions, payment integration keys, and preventing double-bookings.	Proper authorization and secure payment gateway integration are vital to prevent financial fraud (e.g., unauthorized bookings) and ensure the integrity of the booking calendar.
+Protecting Property Management	Ensuring only the rightful Host can edit or remove their listing, and preventing unauthorized access to a property's calendar or pricing.	Object-level permissions prevent a griefing attack where a malicious user could take down or modify someone else's listing, which is catastrophic for the Host's business.
+Platform Availability	Protecting against brute-force attacks on login and denial-of-service (DoS) attacks on the search API.	Rate limiting ensures that the service remains available and responsive for legitimate users, safeguarding the overall user experience and business operations.
+# CI/CD Pipeline Overview
+The pipeline automates the entire software release process, from a developer committing code to that code running live in production. It typically consists of three main stages: Continuous Integration (CI), Continuous Delivery (CD), and Deployment.
 
+1. Continuous Integration (CI) Stage
+The CI stage is triggered by every code commit and focuses on testing and validating the codebase.
+Source	The process begins when a developer pushes new code (a feature or fix) to the Git repository (e.g., to a feature branch).	GitHub/GitLab/Bitbucket (Version Control System)
+Build	The application code is compiled and packaged.	React Frontend: Use npm/Yarn/Vite to build production static assets (npm run build). Django Backend: Create a container image (e.g., Docker) for the Django application.
+Test	Automated tests are executed to confirm the new code hasn't introduced bugs or regressions.	Unit Tests: Run tests for both Django (using Django's built-in testing or pytest) and React (using Jest/React Testing Library). Linting/Security Scan: Check code quality and security vulnerabilities (e.g., using Black/Flake8 for Python and a vulnerability scanner).
+Artifact	The built and tested packages (the "artifact") are stored in a central location, ready for deployment.	Frontend Artifact: Static HTML/CSS/JS files. Backend Artifact: Docker Image pushed to a container registry (e.g., Docker Hub or AWS ECR).
+
+A well-designed Continuous Integration/Continuous Delivery (CI/CD) Pipeline is essential for the Airbnb Clone project to ensure the React frontend and Django backend are built, tested, and deployed reliably and frequently.
+
+Here is an overview of the CI/CD pipeline, detailing the stages and the tools appropriate for your chosen tech stack.
+
+CI/CD Pipeline Overview
+The pipeline automates the entire software release process, from a developer committing code to that code running live in production. It typically consists of three main stages: Continuous Integration (CI), Continuous Delivery (CD), and Deployment.
+
+1. Continuous Integration (CI) Stage
+The CI stage is triggered by every code commit and focuses on testing and validating the codebase.
+
+Step	Description	Tools & Actions
+Source	The process begins when a developer pushes new code (a feature or fix) to the Git repository (e.g., to a feature branch).	GitHub/GitLab/Bitbucket (Version Control System)
+Build	The application code is compiled and packaged.	React Frontend: Use npm/Yarn/Vite to build production static assets (npm run build). Django Backend: Create a container image (e.g., Docker) for the Django application.
+Test	Automated tests are executed to confirm the new code hasn't introduced bugs or regressions.	Unit Tests: Run tests for both Django (using Django's built-in testing or pytest) and React (using Jest/React Testing Library). Linting/Security Scan: Check code quality and security vulnerabilities (e.g., using Black/Flake8 for Python and a vulnerability scanner).
+Artifact	The built and tested packages (the "artifact") are stored in a central location, ready for deployment.	Frontend Artifact: Static HTML/CSS/JS files. Backend Artifact: Docker Image pushed to a container registry (e.g., Docker Hub or AWS ECR).
+
+2. Continuous Delivery (CD) Stage
+The CD stage ensures the tested code can be rapidly and reliably released to lower environments for further validation.
+Staging Deploy	The artifact is automatically deployed to a Staging Environment, which mimics the production environment.	GitHub Actions/GitLab CI/Jenkins/Drone CI to trigger deployment to a staging server/service.
+End-to-End (E2E) Tests	Automated tests simulating a full user journey (e.g., searching for a listing, making a booking, leaving a review) are executed.	Cypress or Selenium to test the integrated Frontend ↔ Backend interaction.
+Manual QA/UAT	The QA team or Product Owner performs final checks and User Acceptance Testing (UAT).	If all tests pass, the team approves the deployment for the production release.
+
+A well-designed Continuous Integration/Continuous Delivery (CI/CD) Pipeline is essential for the Airbnb Clone project to ensure the React frontend and Django backend are built, tested, and deployed reliably and frequently.
+
+Here is an overview of the CI/CD pipeline, detailing the stages and the tools appropriate for your chosen tech stack.
+
+CI/CD Pipeline Overview
+The pipeline automates the entire software release process, from a developer committing code to that code running live in production. It typically consists of three main stages: Continuous Integration (CI), Continuous Delivery (CD), and Deployment.
+
+1. Continuous Integration (CI) Stage
+The CI stage is triggered by every code commit and focuses on testing and validating the codebase.
+
+Step	Description	Tools & Actions
+Source	The process begins when a developer pushes new code (a feature or fix) to the Git repository (e.g., to a feature branch).	GitHub/GitLab/Bitbucket (Version Control System)
+Build	The application code is compiled and packaged.	React Frontend: Use npm/Yarn/Vite to build production static assets (npm run build). Django Backend: Create a container image (e.g., Docker) for the Django application.
+Test	Automated tests are executed to confirm the new code hasn't introduced bugs or regressions.	Unit Tests: Run tests for both Django (using Django's built-in testing or pytest) and React (using Jest/React Testing Library). Linting/Security Scan: Check code quality and security vulnerabilities (e.g., using Black/Flake8 for Python and a vulnerability scanner).
+Artifact	The built and tested packages (the "artifact") are stored in a central location, ready for deployment.	Frontend Artifact: Static HTML/CSS/JS files. Backend Artifact: Docker Image pushed to a container registry (e.g., Docker Hub or AWS ECR).
+
+Export to Sheets
+2. Continuous Delivery (CD) Stage
+The CD stage ensures the tested code can be rapidly and reliably released to lower environments for further validation.
+
+Step	Description	Tools & Actions
+Staging Deploy	The artifact is automatically deployed to a Staging Environment, which mimics the production environment.	GitHub Actions/GitLab CI/Jenkins/Drone CI to trigger deployment to a staging server/service.
+End-to-End (E2E) Tests	Automated tests simulating a full user journey (e.g., searching for a listing, making a booking, leaving a review) are executed.	Cypress or Selenium to test the integrated Frontend ↔ Backend interaction.
+Manual QA/UAT	The QA team or Product Owner performs final checks and User Acceptance Testing (UAT).	If all tests pass, the team approves the deployment for the production release.
+
+3. Deployment Stage
+The final stage is moving the validated code into the live Production Environment.
+Frontend Deployment	The static React assets are deployed to a highly optimized hosting platform.	Vercel or Netlify for simple, fast hosting of static React apps, often utilizing a global CDN.
+Backend Deployment	The Django container image is deployed to a cloud environment where it can scale.	Render/AWS ECS/Google Cloud Run to run the Django Docker container and manage the PostgreSQL database connection.
+Monitoring	The application health, performance, and error rates are actively tracked immediately after deployment.	Prometheus for metrics, Grafana for visualization, and a centralized logging service (e.g., ELK Stack) to catch new issues quickly.
