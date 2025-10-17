@@ -1,4 +1,4 @@
-# airbnb-clone-project
+# Airbnb-clone-project
 # Project Overview
 The Airbnb Clone Project is a comprehensive, full-stack web application designed to simulate the core features and architecture of a modern booking platform like Airbnb. Its primary purpose is to provide hands-on experience in building a scalable, secure, and feature-rich application from the ground up, covering both the server-side logic and the client-side user experience. It serves as a practical, real-world development exercise.
 
@@ -27,13 +27,100 @@ Media/Storage	AWS S3 or Cloudinary	Necessary for storing user-uploaded media lik
 Deployment	Vercel/Netlify (Frontend) and Render or Heroku (Backend/DB)	Platforms to host the frontend and run the Python/Django backend and database.
 
 # Software Development Team Roles and Responsibilities
-Product Owner (PO)	Acts as the voice of the customer and business, defining the "what" and "why" of the application.	<ul><li>Prioritize Features: Define and prioritize the product backlog (e.g., search, booking, messaging, reviews).</li><li>Maximize ROI: Ensure that the most valuable features (like the core listing/booking loop) are developed first.</li><li>Accept/Reject Work: Provide final acceptance that completed features meet user and business requirements.</li></ul>
-Project Manager (PM)	Charged with the project's orchestration, ensuring smooth execution, adherence to timelines, and efficient resource allocation.	<ul><li>Plan & Schedule: Create and manage the overall project roadmap and timelines (e.g., Sprint planning).</li><li>Coordinate: Facilitate communication between the Frontend and Backend teams.</li><li>Mitigate Risk: Identify potential delays (e.g., API integration challenges) and proactively solve them to keep the project on track.</li></ul>
-UI/UX Designer	Crafts intuitive, visually appealing, and engaging user experiences.	<ul><li>User Research: Define user personas (Guests vs. Hosts) and map user journeys (e.g., the booking flow).</li><li>Wireframes & Prototypes: Design the visual layouts for the homepage, listing pages, and user dashboards.</li><li>Aesthetics: Create a consistent design system (using tools like Figma) that the Frontend team will implement.</li></ul>
-Backend Developer (Django)	Responsible for building and maintaining the server-side logic, data storage, and the API.	<ul><li>API Development: Build and secure the Django REST Framework (DRF) endpoints for all data operations (CRUD for listings, user auth, bookings).</li><li>Database Management: Design the PostgreSQL data models and manage migrations using Django's ORM.</li><li>Business Logic: Implement complex logic like date availability checking, pricing calculation, and transaction processing.</li></ul>
-Frontend Developer (React)	Translates the UI/UX designs into a functional, responsive, and interactive application interface.	<ul><li>UI Implementation: Develop the user-facing features (search bar, listing cards, filters, interactive map) using React.</li><li>API Integration: Consume data from the Django API and manage application state (e.g., user login status, filtered search results).</li><li>Responsiveness: Ensure the application looks and functions correctly across all screen sizes (mobile, tablet, desktop).</li></ul>
-Quality Assurance (QA) Engineer	Creates test plans and executes testing to ensure the software meets quality, performance, and security standards.	<ul><li>Test Planning: Create test cases for all features (e.g., "Can a user book a listing twice for the same dates?").</li><li>Functional Testing: Perform manual and automated tests on the full user flow (e.g., signing up, creating a listing, making a booking).</li><li>Bug Reporting: Track, report, and verify fixes for all defects found during development.</li></ul>
-DevOps Engineer	Manages the infrastructure, deployment pipeline, and monitoring of the application.	<ul><li>CI/CD: Automate the build, test, and deployment process (e.g., using GitHub Actions) for both the Django and React apps.</li><li>Infrastructure Management: Set up and maintain the production environment (servers, database, media storage like S3).</li><li>Monitoring: Implement tools to track application performance, server health, and log errors to ensure high uptime.</li></ul>
+<table border="1" cellpadding="8" cellspacing="0">
+    <thead>
+      <tr>
+        <th>Role</th>
+        <th>Brief Description</th>
+        <th>Core Responsibilities in the Airbnb Clone Project</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Product Owner (PO)</td>
+        <td>Acts as the voice of the customer and business, defining the "what" and "why" of the application.</td>
+        <td>
+          <ul>
+            <li><strong>Prioritize Features:</strong> Define and prioritize the product backlog (e.g., search, booking, messaging, reviews).</li>
+            <li><strong>Maximize ROI:</strong> Ensure that the most valuable features (like the core listing/booking loop) are developed first.</li>
+            <li><strong>Accept/Reject Work:</strong> Provide final acceptance that completed features meet user and business requirements.</li>
+          </ul>
+        </td>
+      </tr>
+
+      <tr>
+        <td>Project Manager (PM)</td>
+        <td>Charged with the project's orchestration, ensuring smooth execution, adherence to timelines, and efficient resource allocation.</td>
+        <td>
+          <ul>
+            <li><strong>Plan & Schedule:</strong> Create and manage the overall project roadmap and timelines (e.g., Sprint planning).</li>
+            <li><strong>Coordinate:</strong> Facilitate communication between the Frontend and Backend teams.</li>
+            <li><strong>Mitigate Risk:</strong> Identify potential delays (e.g., API integration challenges) and proactively solve them to keep the project on track.</li>
+          </ul>
+        </td>
+      </tr>
+
+      <tr>
+        <td>UI/UX Designer</td>
+        <td>Crafts intuitive, visually appealing, and engaging user experiences.</td>
+        <td>
+          <ul>
+            <li><strong>User Research:</strong> Define user personas (Guests vs. Hosts) and map user journeys (e.g., the booking flow).</li>
+            <li><strong>Wireframes & Prototypes:</strong> Design the visual layouts for the homepage, listing pages, and user dashboards.</li>
+            <li><strong>Aesthetics:</strong> Create a consistent design system (using tools like Figma) that the Frontend team will implement.</li>
+          </ul>
+        </td>
+      </tr>
+
+      <tr>
+        <td>Backend Developer (Django)</td>
+        <td>Responsible for building and maintaining the server-side logic, data storage, and the API.</td>
+        <td>
+          <ul>
+            <li><strong>API Development:</strong> Build and secure the Django REST Framework (DRF) endpoints for all data operations (CRUD for listings, user auth, bookings).</li>
+            <li><strong>Database Management:</strong> Design the PostgreSQL data models and manage migrations using Django's ORM.</li>
+            <li><strong>Business Logic:</strong> Implement complex logic like date availability checking, pricing calculation, and transaction processing.</li>
+          </ul>
+        </td>
+      </tr>
+
+      <tr>
+        <td>Frontend Developer (React)</td>
+        <td>Translates the UI/UX designs into a functional, responsive, and interactive application interface.</td>
+        <td>
+          <ul>
+            <li><strong>UI Implementation:</strong> Develop the user-facing features (search bar, listing cards, filters, interactive map) using React.</li>
+            <li><strong>API Integration:</strong> Consume data from the Django API and manage application state (e.g., user login status, filtered search results).</li>
+            <li><strong>Responsiveness:</strong> Ensure the application looks and functions correctly across all screen sizes (mobile, tablet, desktop).</li>
+          </ul>
+        </td>
+      </tr>
+
+      <tr>
+        <td>Quality Assurance (QA) Engineer</td>
+        <td>Creates test plans and executes testing to ensure the software meets quality, performance, and security standards.</td>
+        <td>
+          <ul>
+            <li><strong>Test Planning:</strong> Create test cases for all features (e.g., “Can a user book a listing twice for the same dates?”).</li>
+            <li><strong>Functional Testing:</strong> Perform manual and automated tests on the full user flow (e.g., signing up, creating a listing, making a booking).</li>
+            <li><strong>Bug Reporting:</strong> Track, report, and verify fixes for all defects found during development.</li>
+          </ul>
+        </td>
+      </tr>
+
+      <tr>
+        <td>DevOps Engineer</td>
+        <td>Manages the infrastructure, deployment pipeline, and monitoring of the application.</td>
+        <td>
+          <ul>
+            <li><strong>CI/CD:</strong> Automate the build, test, and deployment process (e.g., using GitHub Actions) for both the Django and React apps.</li>
+            <li><strong>Infrastructure Management:</strong> Set up and maintain the production environment (servers, database, media storage like S3).</li>
+            <li><strong>Monitoring:</strong> Implement tools to track application performance, server health, and log errors to ensure high uptime.</li>
+          </ul>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
 # Core Database Entities (Tables)
 The database schema would be centered around four main tables that define the application's core functions:
